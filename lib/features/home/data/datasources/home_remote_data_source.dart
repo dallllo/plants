@@ -18,9 +18,12 @@ class HomeRemoteDataSource implements BaseHomeRemoteDataSource {
   Future<DetailsModel> getDetails(String name) async {
     final geminiKey = dotenv.env['GEMINI_API_KEY'];
 
+    print('💕');
+    print('GEMINI_API_KEY $geminiKey');
+    print('______________-------- :) ----------- (: -------___________');
+
     if (geminiKey == null) {
       throw Exception("GEMINI_API_KEY is missing");
-
     }
     final response = await dio.dio.post(
       'https://generativelanguage.googleapis.com/v1/models/gemini-2.5-flash-lite:generateContent',
@@ -31,38 +34,44 @@ class HomeRemoteDataSource implements BaseHomeRemoteDataSource {
             "parts": [
               {
                 "text":
-'''
+                    '''
 Generate NEW and DIFFERENT plant care tips every time for: $name.
 Each response must be unique and not repeated.
 
 Be creative and vary the wording and facts.
-'''
+اجب باللغه العربيه 
+''',
               },
             ],
           },
         ],
       },
     );
+
+print('❇️');
+print(response);
+print('❇️');
+
     final text = response.data['candidates'][0]['content']['parts'][0]['text'];
-    return DetailsModel(
-      name: name,
-      description: text,
-    );
+    return DetailsModel(name: name, description: text);
   }
 
   @override
   Future<HomeModel> getHomeIdentify(String path) async {
     final plantKey = dotenv.env['PLANTNET_API_KEY'];
+    print('🚗');
+    print("PLANTNET_API_KEY => $plantKey");
     final formData = dio_package.FormData.fromMap({
       'images': await dio_package.MultipartFile.fromFile(path),
-      'organs': 'leaf', 
+      'organs': 'leaf',
     });
-
+print('formData 😂😂😂 $formData');
     final response = await dio.dio.post(
       'https://my-api.plantnet.org/v2/identify/all',
       queryParameters: {'api-key': plantKey},
       data: formData,
     );
+print('response 😂😂😂 $response');
 
     final results = response.data['results'];
 
@@ -71,7 +80,7 @@ Be creative and vary the wording and facts.
     }
 
     final plantName = results[0]['species']['scientificNameWithoutAuthor'];
-
-    return HomeModel(name: plantName, imageUrl: path);
+    final score = results[0]['score'];
+    return HomeModel(name: plantName, imageUrl: path, score:  score);
   }
 }

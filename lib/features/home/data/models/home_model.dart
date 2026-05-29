@@ -8,6 +8,7 @@ abstract class HomeModel with _$HomeModel {
   const factory HomeModel({
     required String name,
     required String imageUrl,
+    double? score,
   }) = _HomeModel;
 
   factory HomeModel.fromJson(Map<String, Object?> json) => _$HomeModelFromJson(json);
@@ -17,6 +18,6 @@ abstract class HomeModel with _$HomeModel {
 
 extension HomeModelMapper on HomeModel {
   HomeEntity toEntity() {
-    return HomeEntity(name: name, imageUrl: imageUrl);
+    return HomeEntity(name: name, imageUrl: imageUrl, score: score,);
   }
   }

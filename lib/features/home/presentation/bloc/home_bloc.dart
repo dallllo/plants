@@ -14,12 +14,29 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
   HomeBloc(this.identify, this.details) : super(InitialHomeState()) {
     on<ScanPlant>((event, emit) async {
+print('1🆕');
       emit(LoadingHomeState());
+print('2🆕');
       final result = await identify.getHomeIdentifyPlant((event.path));
-      result.match(
-        (l) => emit(ErrorHomeState(l)),
-        (r) => emit(PlantLoadedHomeState(r)),
-      );
+
+  print("3️⃣ AFTER API.  result:  $result");
+
+  result.match(
+    (l) {
+      print("4️⃣ ERROR");
+      emit(ErrorHomeState(l));
+    },
+    (r) {
+      print("5️⃣ SUCCESS   ${r.name}");
+      emit(PlantLoadedHomeState(r));
+    },
+  );
+      // result.match(
+      //   (l) => emit(ErrorHomeState(l)),
+      //   (r) => emit(PlantLoadedHomeState(r)),
+      // );
+      print(' 👀 event.path.  ${event.path}');
+      print(' 👀 result.  $result');
     });
 
     on<PickImagesEvent>((event, emit) async {
@@ -34,13 +51,28 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
     on<LoadDetails>((event, emit) async {
       emit(LoadingHomeState());
-
+print('3🆕');
       final result = await details.getHomeDetailsPlant(event.name);
 
-      result.match(
-        (l) => emit(ErrorHomeState(l)),
-        (r) => emit(DetailsLoadedHomeState(r)),
-      );
+      // result.match(
+      //   (l) => emit(ErrorHomeState(l)),
+      //   (r) => emit(DetailsLoadedHomeState(r)),
+      // );
+
+
+  print("3️⃣ AFTER API");
+
+  result.match(
+    (l) {
+      print("4️⃣ ERROR");
+      emit(ErrorHomeState(l));
+    },
+    (r) {
+      print("5️⃣ SUCCESS");
+      emit(DetailsLoadedHomeState(r));
+    },
+  );
+
     });
   }
 }

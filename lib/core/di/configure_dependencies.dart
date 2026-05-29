@@ -12,7 +12,6 @@ import 'configure_dependencies.config.dart';
 
 Future<void> configureDependencies() async {
   final getIt = GetIt.instance;
-
   getIt.init();
 
 }

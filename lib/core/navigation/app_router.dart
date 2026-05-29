@@ -31,8 +31,7 @@ class AppRouter {
         builder: (context, state) {
           final ex = state.extra as HomeEntity;
           return BlocProvider(
-            create: (context) =>
-                GetIt.I<DetailsCubit>(),
+            create: (context) => GetIt.I<DetailsCubit>()..getDetailsMethod(ex.name),
             child: DetailsFeatureScreen(extra: ex),
           );
         },

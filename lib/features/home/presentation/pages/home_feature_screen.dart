@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gap/gap.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:plants_app/core/extensions/context_extensions.dart';
+import 'package:plants_app/core/navigation/routers.dart';
 import 'package:plants_app/features/home/presentation/bloc/home_bloc.dart';
 import 'package:plants_app/features/home/presentation/widgets/container_items.dart';
 
@@ -17,13 +20,15 @@ class HomeFeatureScreen extends StatelessWidget {
             BlocConsumer<HomeBloc, HomeState>(
               listener: (context, state) {
                 if (state is PlantLoadedHomeState) {
-                  context.push('/details', extra: state.plant);
+                  print('😂');
+                  print(state.plant);
+                  // context.push('/details', extra: state.plant);
+                  context.push(Routes.details, extra: state.plant);
                 }
 
                 if (state is ErrorHomeState) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text(state.failure.message)),
-                  );
+                  print('error ❌${state.failure.message}');
+                  context.showSnackBar(state.failure.message, isError: true);
                 }
               },
               builder: (context, state) {
@@ -35,10 +40,10 @@ class HomeFeatureScreen extends StatelessWidget {
                   child: Center(
                     child: SizedBox(
                       width: double.infinity,
-                      height: 600,
+                      height: 1000,
                       child: Column(
                         children: [
-                          const SizedBox(height: 10),
+                          const Gap(10),
                           ElevatedButton(
                             onPressed: () async {
                               final picker = ImagePicker();
@@ -59,7 +64,7 @@ class HomeFeatureScreen extends StatelessWidget {
                             ),
                             child: const Text('Select 6 Images'),
                           ),
-                          const SizedBox(height: 10),
+                          const Gap(10),
 
                       
                           Expanded(
@@ -72,12 +77,12 @@ class HomeFeatureScreen extends StatelessWidget {
                                     );
                                   }
                                   return GridView.builder(
-                                    padding: const EdgeInsets.all(10),
+                                    padding: const EdgeInsets.all(8),
                                     gridDelegate:
                                         const SliverGridDelegateWithFixedCrossAxisCount(
-                                          crossAxisCount: 3,
-                                          crossAxisSpacing: 10,
-                                          mainAxisSpacing: 10,
+                                          crossAxisCount: 2,
+                                          crossAxisSpacing: 8,
+                                          mainAxisSpacing: 8,
                                         ),
                                     itemCount: state.selectedImages.length,
                                     itemBuilder: (context, index) {

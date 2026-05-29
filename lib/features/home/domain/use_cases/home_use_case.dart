@@ -22,6 +22,10 @@ class HomeGetPlantDetailsUseCase {
 
   HomeGetPlantDetailsUseCase(this._repositoryData);
    Future<Either<Failure, DetailsEntity>> getHomeDetailsPlant(String name) {
+    print(' 🆕 1');
     return _repositoryData.getDetails(name);
+  }
+     Future getidentifyPlant(String path) {
+    return _repositoryData.identifyPlant(path);
   }
 }
