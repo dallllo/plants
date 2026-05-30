@@ -11,10 +11,8 @@ class DetailsRemoteDataSource implements BaseDetailsRemoteDataSource {
     @override
   Future<DetailsModel> getDetails(String name) async {
     try {
-      print('✅$name');
       return DetailsModel(name: name, description: "Plant Description: $name is a beautiful plant that thrives in well-drained soil and requires moderate watering. It prefers bright, indirect sunlight and can add a touch of greenery to any indoor space. With its vibrant foliage and easy care requirements, $name is a popular choice for plant enthusiasts and beginners alike.");
     } catch (error) {
-      print('❌ $error' );
      throw Exception(error);
     }
   }

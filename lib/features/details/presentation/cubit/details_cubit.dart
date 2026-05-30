@@ -1,3 +1,4 @@
+import 'dart:io';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
@@ -8,9 +9,7 @@ import 'package:plants_app/features/details/presentation/cubit/details_state.dar
 class DetailsCubit extends Cubit<DetailsState> {
   final DetailsUseCase _detailsUseCase;
 
-  DetailsCubit(this._detailsUseCase) : super(DetailsInitialState()){
-    // getDetailsMethod();
-  }
+  DetailsCubit(this._detailsUseCase) : super(DetailsInitialState());
 
   Future<void> getDetailsMethod(String name) async {
   emit(DetailsInitialState());

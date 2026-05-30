@@ -20,14 +20,10 @@ class HomeFeatureScreen extends StatelessWidget {
             BlocConsumer<HomeBloc, HomeState>(
               listener: (context, state) {
                 if (state is PlantLoadedHomeState) {
-                  print('😂');
-                  print(state.plant);
-                  // context.push('/details', extra: state.plant);
                   context.push(Routes.details, extra: state.plant);
                 }
 
                 if (state is ErrorHomeState) {
-                  print('error ❌${state.failure.message}');
                   context.showSnackBar(state.failure.message, isError: true);
                 }
               },
